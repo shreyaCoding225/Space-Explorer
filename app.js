@@ -5,12 +5,12 @@ themeToggle.addEventListener("click", () => {
 });
 
 
-// const apiKey = typeof NASA_API_KEY !== 'undefined' ? NASA_API_KEY : 'DEMO_KEY';
+const apiKey = typeof NASA_API_KEY !== 'undefined' ? NASA_API_KEY : 'DEMO_KEY';
 
 async function getSpaceData() {
   try {
     const response = await fetch(
-      `https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}`,
+      `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`,
     );
     const data = await response.json();
     const picContainer= document.getElementById("pic");
@@ -27,7 +27,7 @@ async function getSpaceData() {
     document.getElementById("about-name").innerText = data.title;
     document.getElementById("about-desc").innerText = data.explanation;
   } catch (error) {
-    console.error("we have an error", error);
+    console.error("Connection error:", error);
   }
 }
 
