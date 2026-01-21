@@ -11,6 +11,7 @@ body{
     justify-content: space-between;
     background-color: #120A12;
     gap:40px;
+    min-height: 100vh;
 }
 
 body.light{
@@ -21,7 +22,9 @@ body.light .nav_bar{
     background-color: #141B41;
 }
 
+
 /* navbar */
+
 
 .nav_bar{
     height:20vh;
@@ -111,7 +114,9 @@ body.light .nav_bar{
     transition: all 0.3s ease;
 }
 
+
 /* apod */
+
 
 .apod{
     /* border:2px solid blue; */
@@ -152,3 +157,24 @@ body.light .nav_bar{
     font-family: 'aptos', 'calibri', 'centaur';
     color:#7D8491;
 }
+
+
+/* bottom bar */
+
+
+#bottom{
+    height:100px;
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+}
+
+#bottom-link{
+    color:blueviolet;
+    text-decoration: none;
+    font-family: 'aptos', 'calibri', 'centaur'
+}
+

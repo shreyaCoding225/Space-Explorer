@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="nav_bar" id="top">
+    <header>
+        <div class="nav_bar" id="top">
         <div class="title">
             <div class="name">
                 Space Explorer
@@ -38,10 +39,12 @@
             </div>
         </div>
     </div>
-
-
+    </header>
     
-    <div class="apod">
+
+
+    <main>
+        <div class="apod">
         <div id="pic">
             <img id="apod-img" src="" alt="NASA APOD" style="width:100%; height:100%; object-fit:cover; display:none;">
         </div>
@@ -52,6 +55,20 @@
             <p id="about-desc">Searching the universe....</p>
         </div>
     </div>
+    </main>
+
+
+
+    <footer>
+        <div class="nav_bar" id="bottom">
+            <p>© 2026 Shreya | Built with 🚀 and the <a href="https://api.nasa.gov/" target="_blank" id="bottom-link">NASA API</a></p>
+            <div class="footer-links">
+                <a href="https://github.com/shreyaCoding225/Space-Explorer" id="bottom-link">GitHub</a> |
+                <a href="#home" id="bottom-link">Back to Top</a>
+            </div>
+        </div>
+    </footer>
+    
     
 
 
