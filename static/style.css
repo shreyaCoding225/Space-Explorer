@@ -178,3 +178,63 @@ body.light .nav_bar{
     font-family: 'aptos', 'calibri', 'centaur'
 }
 
+
+/* view by date */
+
+
+.modal-overlay {
+    display: none; 
+    position: fixed;
+    top: 80px; 
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 80px); 
+    
+    background: rgba(255, 255, 255, 0.05); 
+    backdrop-filter: blur(12px);
+    z-index: 1000;
+    
+    justify-content: center;
+    align-items: center; 
+
+    cursor: default;
+}
+
+.modal-box {
+    color: #ffffff;
+    cursor: auto;
+    position: relative;
+    background: #0a050a;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 280px; /* Slimmer, dropdown style */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* 4. Add the 'Selector Hand' to your close icon */
+#close-modal {
+    position: absolute; /* Changed from float for better control */
+    top: 10px;
+    right: 15px;
+    cursor: pointer !important; /* This gives the 'selector hand' */
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: bold;
+    z-index: 1010;
+}
+
+#close-modal:hover {
+    color: white; /* Makes it glow slightly when you hover */
+}
+
+/* Adjusting internal element sizes */
+#calendar-input {
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #1a1a1a;
+    color: white;
+    margin: 10px 0;
+}

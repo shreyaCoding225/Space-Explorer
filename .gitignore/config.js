@@ -1,1 +1,0 @@
-const NASA_API_KEY = "NTNSkoVW35qXkgXelBDa3J3bjgKkyuYfLxioLZsS";

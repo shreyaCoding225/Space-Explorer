@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Explorer</title>
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
     <header>
         <div class="nav_bar" id="top">
@@ -35,18 +39,20 @@
                     <a class="options link" href="#">Learn More<i class="fa-regular fa-circle-question"></i></a>
                 </div>
                 <div class="options" id="mode">
-                    <a class="options link" href="#"><i class="fa-regular fa-sun"></i>/<i class="fa-regular fa-moon"></i></a>
+                    <a class="options link" href="#"><i class="fa-regular fa-sun"></i>/<i
+                            class="fa-regular fa-moon"></i></a>
                 </div>
             </div>
         </div>
     </header>
-    
+
 
 
     <main>
         <div class="apod">
             <div id="pic">
-                <img id="apod-img" src="" alt="NASA APOD" style="width:100%; height:100%; object-fit:cover; display:none;">
+                <img id="apod-img" src="" alt="NASA APOD"
+                    style="width:100%; height:100%; object-fit:cover; display:none;">
             </div>
             <br>
             <div id="about">
@@ -55,30 +61,53 @@
                 <p id="about-desc">Searching the universe....</p>
             </div>
         </div>
+
     </main>
+
+
+    <!-- view by date -->
+
+    <div id="date-modal-overlay" class="modal-overlay">
+        <div class="modal-box">
+            <span id="close-modal" class="close-icon">&times;</span>
+
+            <div class="input-group">
+                <p style="font-size: 0.9rem; margin-bottom: 5px;">Pick a date:</p>
+                <input type="date" id="calendar-input" min="1995-06-16">
+            </div>
+
+            <button id="launch-date-btn" class="primary" style="padding: 8px 15px; font-size: 0.9rem;">
+                Explore
+            </button>
+
+            <div id="space-result-area"></div>
+        </div>
+    </div>
 
 
 
     <footer>
         <div class="nav_bar" id="bottom">
-            <p>© 2026 Shreya | Built with 🚀 and the <a href="https://api.nasa.gov/" target="_blank" id="bottom-link">NASA API</a></p>
+            <p>© 2026 Shreya | Built with 🚀 and the <a href="https://api.nasa.gov/" target="_blank"
+                    id="bottom-link">NASA API</a></p>
             <div class="footer-links">
                 <a href="https://github.com/shreyaCoding225/Space-Explorer" id="bottom-link">GitHub</a> |
                 <a href="#home" id="bottom-link">Back to Top</a>
             </div>
         </div>
     </footer>
-    
-    
 
 
 
 
 
 
-    <script src="config.js"></script>
-    <script src="app.js"></script>
-    
+
+
+    <!-- <script src="config.js"></script> -->
+    <script src="/static/app.js"></script>
+
 
 </body>
+
 </html>
