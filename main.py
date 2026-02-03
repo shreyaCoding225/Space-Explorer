@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from dotenv import load_dotenv
+from fastapi.responses import Response
 
 # 1. Load your secret NASA_API_KEY from the .env file
 load_dotenv()
@@ -19,6 +20,10 @@ async def read_index():
     return FileResponse('index.html')
 
 
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return Response(content="", media_type="image/x-icon")
+
 #View by date
 @app.get("/fetch-date")
 async def get_space_data(date: str):
@@ -31,3 +36,12 @@ async def get_space_data(date: str):
         data= response.json()
         print(f"NASA response for {date}: {data}")
         return data
+    
+
+#Surprise me!
+@app.get('/surprise')
+async def get_surprise():
+    url = f"https://api.nasa.gov/planetary/apod?api_key={NASA_KEY}&count=1"  #returns a list of count no. of objects
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url)
+        return response.json()[0]

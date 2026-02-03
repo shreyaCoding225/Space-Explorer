@@ -1,111 +1,132 @@
 const themeToggle = document.getElementById("mode");
-
 themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("light");
 });
 
-const apiKey = typeof NASA_API_KEY !== "undefined" ? NASA_API_KEY : "DEMO_KEY";
-
-// APOD
-
-async function getSpaceData() {
+async function getInitialSpaceData() {
   const cachedData = sessionStorage.getItem("nasaData");
+  
   if (cachedData) {
-    renderUI(JSON.parse(cachedData));
+    updateUI(JSON.parse(cachedData), false);
     return;
   }
 
   try {
-    const response = await fetch(
-      `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`,
-    );
+    const response = await fetch("/fetch-date?date=");
     const data = await response.json();
 
-    if (data.msg || data.error || !data.url) {
-      handleError(data.error?.message || data.msg || "Invalid Data");
+    if (data.error || !data.url) {
+      handleError(data.error?.message || "Invalid Data");
       return;
     }
+
     sessionStorage.setItem("nasaData", JSON.stringify(data));
-    renderUI(data);
+    updateUI(data, false); 
+
   } catch (error) {
     console.error("Connection error:", error);
-    handleError("Could not connect to the NASA servers.");
+    handleError("Could not connect to the mission control.");
   }
-}
-
-function renderUI(data) {
-  const picContainer = document.getElementById("pic");
-  picContainer.innerHTML =
-    data.media_type === "video"
-      ? `<iframe src="${data.url}" ...></iframe>`
-      : `<img id="apod-img" src="${data.url}" ...>`;
-
-  document.getElementById("about-name").innerText = data.title;
-  document.getElementById("about-desc").innerText = data.explanation;
 }
 
 function handleError(message) {
   document.getElementById("about-name").innerText = "Cosmic Signal Lost";
   document.getElementById("about-desc").innerText = message;
-  document.getElementById("pic").innerHTML = ""; // Clear broken icons
+  
+  document.getElementById("apod-img").style.display = "none";
+  document.getElementById("apod-video").style.display = "none";
 }
 
-getSpaceData();
+getInitialSpaceData();
 
-// View by Date
+
+
 
 const modalOverlay = document.getElementById("date-modal-overlay");
-const closeBtn = document.getElementById("close-modal");
 const calendar = document.getElementById("calendar-input");
 const launchBtn = document.getElementById("launch-date-btn");
+const surpriseBtn = document.getElementById("Surprise");
 
-//NEW: Click on background to close
-modalOverlay.addEventListener("click", (event) => {
-  // This checks if you clicked the actual overlay and NOT the box inside it
-  if (event.target === modalOverlay) {
-    modalOverlay.style.display = "none";
-  }
-});
+function updateUI(data, shouldReset = true) {
+    const imgEl = document.getElementById("apod-img");
+    const videoEl = document.getElementById("apod-video");
+    const titleEl = document.getElementById("about-name");
+    const descEl = document.getElementById("about-desc");
 
-document.getElementById("bydate").addEventListener("click", (e) => {
-  e.preventDefault();
-  modalOverlay.style.display = "flex";
+    // Safety: If HTML is missing anything, stop here
+    if (!imgEl || !videoEl || !titleEl || !descEl) return;
 
-  calendar.focus();
-  if (calendar.showPicker) {
-    calendar.showPicker();
-  }
-});
-
-closeBtn.addEventListener("click", () => {
-  modalOverlay.style.display = "none";
-});
-
-launchBtn.addEventListener("click", async () => {
-  const dateValue = calendar.value;
-  if (!dateValue) return alert("Please select a date!");
-
-  launchBtn.innerText = "Launching...";
-
-  try {
-    const response = await fetch(`/fetch-date?date=${dateValue}`);
-    const data = await response.json();
-
-    if (data.error) {
-      // If NASA sends an error, show that instead of 'undefined'
-      alert("NASA Error: " + data.error.message);
-      launchBtn.innerText = "Explore";
-      return;
+    // Reset UI state
+    if (shouldReset) {
+        imgEl.style.display = "none";
+        videoEl.style.display = "none";
+        imgEl.src = "";
+        videoEl.src = "";
     }
 
-    document.getElementById("about-name").innerText = data.title;
-    document.getElementById("apod-img").src = data.url;
-    document.getElementById("about-desc").innerText = data.explanation;
+    titleEl.innerText = data.title;
+    descEl.innerText = data.explanation;
 
+    if (data.media_type === "video") {
+        imgEl.style.display = "none";
+        videoEl.style.display = "block";
+        videoEl.src = data.url;
+    } else {
+        videoEl.style.display = "none";
+        videoEl.src = ""; 
+        imgEl.src = data.url;
+        
+        // Show immediately if cached, otherwise wait for load
+        if (imgEl.complete) {
+            imgEl.style.display = "block";
+        } else {
+            imgEl.onload = () => { imgEl.style.display = "block"; };
+        }
+    }
+}
+
+launchBtn.addEventListener("click", async () => {
+    const dateValue = calendar.value;
+    if (!dateValue) return alert("Please select a date!");
+    launchBtn.innerText = "Launching...";
+
+    try {
+        const response = await fetch(`/fetch-date?date=${dateValue}`);
+        const data = await response.json();
+        updateUI(data, false);
+        modalOverlay.style.display = "none";
+        launchBtn.innerText = "Explore";
+    } catch (err) {
+        launchBtn.innerText = "Error!";
+    }
+});
+
+surpriseBtn.addEventListener("click", async () => {
+    surpriseBtn.innerText = "🌀 Shuffling...";
+    try {
+        const response = await fetch("/surprise");
+        const data = await response.json();
+        updateUI(data, true);
+        surpriseBtn.innerText = "Surprise me!";
+    } catch (err) {
+        surpriseBtn.innerText = "Try Again";
+    }
+});
+
+// MODAL CONTROLS
+document.getElementById("bydate").addEventListener("click", (e) => {
+    e.preventDefault();
+    modalOverlay.style.display = "flex";
+    calendar.focus();
+    if (calendar.showPicker) {
+        calendar.showPicker(); // Opens the calendar automatically
+    }
+});
+
+document.getElementById("close-modal").addEventListener("click", () => {
     modalOverlay.style.display = "none";
-    launchBtn.innerText = "Explore";
-  } catch (error) {
-    console.error("Transmission failed:", error);
-    launchBtn.innerText = "Error!";
-  }
+});
+
+modalOverlay.addEventListener("click", (e) => {
+    if (e.target === modalOverlay) modalOverlay.style.display = "none";
 });
