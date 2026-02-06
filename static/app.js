@@ -3,11 +3,13 @@ themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("light");
 });
 
+//APOD
+
 async function getInitialSpaceData() {
   const cachedData = sessionStorage.getItem("nasaData");
   
   if (cachedData) {
-    updateUI(JSON.parse(cachedData), false);
+    updateUI(JSON.parse(cachedData), true);
     return;
   }
 
@@ -52,6 +54,7 @@ function updateUI(data, shouldReset = true) {
     const videoEl = document.getElementById("apod-video");
     const titleEl = document.getElementById("about-name");
     const descEl = document.getElementById("about-desc");
+    const loader = document.getElementById("loader");
 
     // Safety: If HTML is missing anything, stop here
     if (!imgEl || !videoEl || !titleEl || !descEl) return;
@@ -66,11 +69,13 @@ function updateUI(data, shouldReset = true) {
 
     titleEl.innerText = data.title;
     descEl.innerText = data.explanation;
+    loader.style.display = "block";
 
     if (data.media_type === "video") {
         imgEl.style.display = "none";
         videoEl.style.display = "block";
         videoEl.src = data.url;
+        loader.style.display = "none";
     } else {
         videoEl.style.display = "none";
         videoEl.src = ""; 
@@ -79,11 +84,17 @@ function updateUI(data, shouldReset = true) {
         // Show immediately if cached, otherwise wait for load
         if (imgEl.complete) {
             imgEl.style.display = "block";
+            loader.style.display = "none";
         } else {
-            imgEl.onload = () => { imgEl.style.display = "block"; };
+            imgEl.onload = () => { 
+                imgEl.style.display = "block";
+                loader.style.display = "none"; 
+            };
         }
     }
 }
+
+//View by Date
 
 launchBtn.addEventListener("click", async () => {
     const dateValue = calendar.value;
@@ -93,23 +104,11 @@ launchBtn.addEventListener("click", async () => {
     try {
         const response = await fetch(`/fetch-date?date=${dateValue}`);
         const data = await response.json();
-        updateUI(data, false);
+        updateUI(data, true);
         modalOverlay.style.display = "none";
         launchBtn.innerText = "Explore";
     } catch (err) {
         launchBtn.innerText = "Error!";
-    }
-});
-
-surpriseBtn.addEventListener("click", async () => {
-    surpriseBtn.innerText = "🌀 Shuffling...";
-    try {
-        const response = await fetch("/surprise");
-        const data = await response.json();
-        updateUI(data, true);
-        surpriseBtn.innerText = "Surprise me!";
-    } catch (err) {
-        surpriseBtn.innerText = "Try Again";
     }
 });
 
@@ -129,4 +128,36 @@ document.getElementById("close-modal").addEventListener("click", () => {
 
 modalOverlay.addEventListener("click", (e) => {
     if (e.target === modalOverlay) modalOverlay.style.display = "none";
+});
+
+
+//Surprise me!
+
+surpriseBtn.addEventListener("click", async () => {
+    surpriseBtn.innerText = "🌀 Shuffling...";
+    try {
+        const response = await fetch("/surprise");
+        const data = await response.json();
+        updateUI(data, true);
+        surpriseBtn.innerText = "Surprise me!";
+    } catch (err) {
+        surpriseBtn.innerText = "Try Again";
+    }
+});
+
+
+//Home
+const homeBtn= document.getElementById('home');
+homeBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+
+    getInitialSpaceData();
+});
+
+
+//Learn more
+const learnMore= document.getElementById('learnmore');
+learnMore.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.open("/learn-more", "_blank");
 });

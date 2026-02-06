@@ -14,12 +14,18 @@ body{
     min-height: 100vh;
 }
 
+/* theme toggle */
+
 body.light{
     background-color: white;
 }
 
 body.light .nav_bar{
     background-color: #141B41;
+}
+
+body.light .loader-text {
+    color: #cf8d75; /* A slightly darker pink/brown for better contrast on white */
 }
 
 
@@ -114,6 +120,19 @@ body.light .nav_bar{
     transition: all 0.3s ease;
 }
 
+.options, 
+.options a, 
+.options i {
+    cursor: pointer;
+}
+
+/* Ensure it stays a pointer even when the mouse is hovering after a click */
+.options a:hover, 
+.options a:active, 
+.options a:focus {
+    cursor: pointer;
+}
+
 
 /* apod */
 
@@ -131,7 +150,7 @@ body.light .nav_bar{
     max-width: 900px;
     margin: 0 auto;
     /* aspect-ratio: 16/9; */
-    background-color: black;
+    background-color: transparent;
     overflow: hidden;
     height:auto;
     display:block;
@@ -156,6 +175,16 @@ body.light .nav_bar{
 #about-desc{
     font-family: 'aptos', 'calibri', 'centaur';
     color:#7D8491;
+}
+
+.loader-text {
+    color: #dba895; /* Matches your cyan title color */
+    font-size: 1.2rem;
+    margin: 20px 0;
+    text-align: center;
+    letter-spacing: 2px;
+    font-family: 'century', 'calibri', 'aptos';
+    font-weight: 700;
 }
 
 

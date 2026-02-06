@@ -9,7 +9,7 @@ from fastapi.responses import Response
 # 1. Load your secret NASA_API_KEY from the .env file
 load_dotenv()
 NASA_KEY = os.getenv("NASA_API_KEY")
-print(f"DEBUG: NASA Key loaded: {NASA_KEY}")
+# print(f"DEBUG: NASA Key loaded: {NASA_KEY}")
 
 app = FastAPI()
 
@@ -34,7 +34,7 @@ async def get_space_data(date: str):
         response = await client.get(url)
         # We pass the real NASA data directly back to your frontend
         data= response.json()
-        print(f"NASA response for {date}: {data}")
+        # print(f"NASA response for {date}: {data}")
         return data
     
 
@@ -45,3 +45,9 @@ async def get_surprise():
     async with httpx.AsyncClient() as client:
         response = await client.get(url)
         return response.json()[0]
+
+
+# Learn more
+@app.get('/learn-more')
+def get_learn_more():
+    return FileResponse('./learn_more.html')
