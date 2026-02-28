@@ -9,6 +9,7 @@
 A comprehensive exploration portal that integrates multiple NASA Open APIs to provide real-time astronomical data, planetary imagery, and celestial tracking. This project serves as a centralized hub for space enthusiasts to monitor the cosmos through live data streams.
 
 Explore the Cosmos in Real-Time. > https://space-explorer-4a1y.onrender.com/
+
 **Note**: This project is hosted on a free instance. If the link takes a moment to load, the server is just waking up!
 
 ---
