@@ -5,7 +5,11 @@
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![NASA](https://img.shields.io/badge/NASA-blue?style=for-the-badge&logo=nasa)
 
+
 A comprehensive exploration portal that integrates multiple NASA Open APIs to provide real-time astronomical data, planetary imagery, and celestial tracking. This project serves as a centralized hub for space enthusiasts to monitor the cosmos through live data streams.
+
+Explore the Cosmos in Real-Time. > https://space-explorer-4a1y.onrender.com/
+**Note**: This project is hosted on a free instance. If the link takes a moment to load, the server is just waking up!
 
 ---
 
@@ -64,3 +68,14 @@ Note: .env is automatically ignored by Git to keep your key secure.
 uvicorn main:app --reload
 ```
 Open your browser and navigate to http://127.0.0.1:8000.
+
+---
+
+### 🌐 Deployment on Render
+This project is configured for seamless deployment as a Render Web Service:
+
+Build Command: ```pip install -r requirements.txt```
+
+Start Command: ```uvicorn main:app --host 0.0.0.0 --port $PORT```
+
+Environment Variables: Add your ```NASA_API_KEY``` in the Render Dashboard under 'Environment'.
